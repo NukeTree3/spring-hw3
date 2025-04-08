@@ -1,37 +1,41 @@
 package com.nuketree3.example.springhw2.controller;
 
-import com.nuketree3.example.springhw2.repositories.BookRepository;
+import com.nuketree3.example.springhw2.domain.Book;
+import com.nuketree3.example.springhw2.service.BookService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@org.springframework.stereotype.Controller
+import java.util.List;
+
+@RestController
 @AllArgsConstructor
+@Slf4j
 public class BookController {
 
-    @Autowired
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    @ResponseBody
     @GetMapping("/book/{id}")
-    public String bookInfo(@PathVariable int id) {
-        return bookRepository.getBook(id);
+    public Book bookInfo(@PathVariable int id) {
+        return bookService.getBook(id);
     }
 
-    @ResponseBody
-    @GetMapping("/book/{id}")
-    public String deleteBook(@PathVariable int id) {
-        return bookRepository.getBook(id);
+    @DeleteMapping("/book/{id}")
+    public void deleteBook(@PathVariable int id) {
+        bookService.deleteBook(id);
     }
 
-    @ResponseBody
+    @PostMapping("/book")
+    public void createBook(@RequestBody Book book) {
+        log.info("Book created: {}", book);
+        if(!bookService.saveBook(book)){
+            ResponseEntity.status(409);
+        }
+    }
+
     @GetMapping("/book")
-    public String createBook(@PathVariable int id) {
-        return bookRepository.getBook(id);
+    public List<Book> allBooks() {
+        return bookService.getAllBooks();
     }
-
-
 }
