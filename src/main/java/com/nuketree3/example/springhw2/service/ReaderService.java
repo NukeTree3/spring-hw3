@@ -19,7 +19,7 @@ public class ReaderService {
         readerRepository.saveReader(reader);
     }
 
-    public Reader getReader(int id) {
+    public Reader getReader(long id) {
         return readerRepository.getReader(id);
     }
 
@@ -27,7 +27,7 @@ public class ReaderService {
         return readerRepository.getReaders();
     }
 
-    public void delete(int id){
+    public void delete(long id){
         readerRepository.deleteReader(id);
     }
 }

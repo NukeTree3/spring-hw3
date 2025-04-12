@@ -23,7 +23,7 @@ public class BookService {
         return true;
     }
 
-    public Book getBook(int id) {
+    public Book getBook(long id) {
         return bookRepository.getBook(id);
     }
 
@@ -31,7 +31,7 @@ public class BookService {
         return bookRepository.getBooks();
     }
 
-    public void deleteBook(int id) {
+    public void deleteBook(long id) {
         bookRepository.deleteBook(id);
     }
 }

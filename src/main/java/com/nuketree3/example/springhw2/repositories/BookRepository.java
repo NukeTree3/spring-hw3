@@ -17,7 +17,7 @@ public class BookRepository {
         books = new ArrayList<>();
     }
 
-    public Book getBook(int id) {
+    public Book getBook(long id) {
         log.info("Getting book with id" + id + " : " + books);
         return books.stream().filter(b -> b.getId() == id).findFirst().orElse(null);
     }
@@ -26,7 +26,7 @@ public class BookRepository {
         return books;
     }
 
-    public void deleteBook(int id) {
+    public void deleteBook(long id) {
         books.remove(getBook(id));
     }
 

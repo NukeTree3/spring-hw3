@@ -15,7 +15,7 @@ public class IssueRepository {
         issues = new ArrayList<>();
     }
 
-    public Issue getIssue(int id) {
+    public Issue getIssue(long id) {
         return issues.stream().filter(i -> i.getId() == id).findFirst().orElse(null);
     }
 
@@ -23,7 +23,7 @@ public class IssueRepository {
         return issues;
     }
 
-    public void deleteIssue(int id) {
+    public void deleteIssue(long id) {
         issues.remove(getIssue(id));
     }
 

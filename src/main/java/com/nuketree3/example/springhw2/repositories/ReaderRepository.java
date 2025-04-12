@@ -15,7 +15,7 @@ public class ReaderRepository {
         readers = new ArrayList<>();
     }
 
-    public Reader getReader(int id) {
+    public Reader getReader(long id) {
         return readers.stream().filter(r -> r.getId() == id).findFirst().orElse(null);
     }
 
@@ -23,7 +23,7 @@ public class ReaderRepository {
         return readers;
     }
 
-    public void deleteReader(int id) {
+    public void deleteReader(long id) {
         readers.remove(getReader(id));
     }
 

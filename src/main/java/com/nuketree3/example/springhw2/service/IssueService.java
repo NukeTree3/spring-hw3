@@ -1,5 +1,6 @@
 package com.nuketree3.example.springhw2.service;
 
+import com.nuketree3.example.springhw2.domain.Book;
 import com.nuketree3.example.springhw2.domain.Issue;
 import com.nuketree3.example.springhw2.domain.Reader;
 import com.nuketree3.example.springhw2.repositories.BookRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,7 +39,7 @@ public class IssueService {
         return false;
     }
 
-    public Issue getIssue(int id) {
+    public Issue getIssue(long id) {
         return issueRepository.getIssue(id);
     }
 
@@ -45,7 +47,7 @@ public class IssueService {
         return issueRepository.getIssues();
     }
 
-    public void deleteIssue(int id) {
+    public void deleteIssue(long id) {
         issueRepository.deleteIssue(id);
     }
 
@@ -53,11 +55,19 @@ public class IssueService {
         return issueRepository.getIssues().stream().filter(i -> Objects.equals(i.getReaderId(), id) && i.getReturnedAt() == null).collect(Collectors.toList());
     }
 
+    public List<Book> getAllReaderNoReturnedBooks(long id){
+        List<Book> books = new ArrayList<>();
+        for(Issue issue : getCloseIssuesByReaderId(id)) {
+            books.add(bookRepository.getBook(issue.getBookId()));
+        }
+        return books;
+    }
+
     public List<Issue> getIssuesByReaderId(Long id) {
         return issueRepository.getIssues().stream().filter(i -> Objects.equals(i.getReaderId(), id)).collect(Collectors.toList());
     }
 
-    public void closeIssue(int id) {
+    public void closeIssue(long id) {
         issueRepository.getIssue(id).setReturnedAt(LocalDateTime.now());
     }
 }
