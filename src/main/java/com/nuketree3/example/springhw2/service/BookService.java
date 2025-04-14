@@ -16,11 +16,8 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public boolean saveBook(Book book) {
-        if(getAllBooks().stream().anyMatch(b -> b.getId().equals(book.getId()))) {
-            return false;
-        }
-        bookRepository.saveBook(book);
-        return true;
+        bookRepository.save(book);
+        return false;
     }
 
     public Book getBook(long id) {
@@ -32,6 +29,6 @@ public class BookService {
     }
 
     public void deleteBook(long id) {
-        bookRepository.deleteBook(id);
+        bookRepository.deleteById(id);
     }
 }

@@ -33,7 +33,7 @@ public class IssueService {
         if(getCloseIssuesByReaderId(issue.getReaderId()).size() < maxAllowedBooks &&
                 readerRepository.getReaders().stream().anyMatch(r -> r.getId().equals(issue.getReaderId())) &&
                 bookRepository.getBooks().stream().anyMatch(b -> b.getId().equals(issue.getBookId()))) {
-            issueRepository.saveIssue(issue);
+            issueRepository.save(issue);
             return true;
         }
         return false;
@@ -48,11 +48,11 @@ public class IssueService {
     }
 
     public void deleteIssue(long id) {
-        issueRepository.deleteIssue(id);
+        issueRepository.deleteById(id);
     }
 
     public List<Issue> getCloseIssuesByReaderId(Long id) {
-        return issueRepository.getIssues().stream().filter(i -> Objects.equals(i.getReaderId(), id) && i.getReturnedAt() == null).collect(Collectors.toList());
+        return issueRepository.getIssuesByReaderId(id);
     }
 
     public List<Book> getAllReaderNoReturnedBooks(long id){

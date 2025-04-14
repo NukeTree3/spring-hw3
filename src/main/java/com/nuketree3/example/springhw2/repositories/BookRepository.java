@@ -1,36 +1,20 @@
 package com.nuketree3.example.springhw2.repositories;
 
 import com.nuketree3.example.springhw2.domain.Book;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Slf4j
-public class BookRepository {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    private final List<Book> books;
+    @Query(value = "SELECT * FROM book WHERE id = :book_id", nativeQuery = true)
+    Book getBook(@Param("book_id") Long bookId);
 
-    public BookRepository() {
-        books = new ArrayList<>();
-    }
-
-    public Book getBook(long id) {
-        log.info("Getting book with id" + id + " : " + books);
-        return books.stream().filter(b -> b.getId() == id).findFirst().orElse(null);
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void deleteBook(long id) {
-        books.remove(getBook(id));
-    }
-
-    public void saveBook(Book book) {
-        books.add(book);
-    }
+    @Query(value = "SELECT * FROM book", nativeQuery = true)
+    List<Book> getBooks();
 }

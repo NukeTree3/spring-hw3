@@ -31,7 +31,7 @@ public class IssueController {
     @ResponseBody
     @PostMapping("/issue")
     public ResponseEntity<?> Issue(@RequestBody IssueRequest issueRequest) {
-        if(!issueService.saveIssue(new Issue(issueRequest.getId(), issueRequest.getBookId(), issueRequest.getReaderId()))){
+        if(!issueService.saveIssue(new Issue(issueRequest.getBookId(), issueRequest.getReaderId()))){
             return new ResponseEntity<>(HttpStatusCode.valueOf(409));
         }
         return new ResponseEntity<>(HttpStatus.OK);
